@@ -1,0 +1,63 @@
+{% extends 'website/base.html' %}
+
+{% block title %}Edit Item{% endblock %}
+
+{% block body %}
+<hr class="mt-2">
+<!-- <h1 class="text-3xl font-bold mt-5 ms-5">Add Item:</h1> -->
+<!-- <div class="container mx-auto mt-5"> -->
+<form action="{% url 'edit' item.id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <section class="text-gray-600 body-font relative">
+        <div class="container px-5 pt-7 mx-auto">
+          <div class="flex flex-col text-center w-full mb-3">
+            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Add Item</h1>
+          </div>
+          <div class="lg:w-1/2 md:w-2/3 mx-auto">
+            <div class="flex flex-wrap -m-2">
+              <div class="p-2 w-1/2">
+                <div class="relative">
+                  <label for="name" class="leading-7 text-sm text-gray-600">Name</label>
+                  {{form.name}}
+                </div>
+              </div>
+              <div class="p-2 w-1/2">
+                <div class="relative">
+                  <label for="email" class="leading-7 text-sm text-gray-600">Category</label>
+                  {{form.category}}
+                </div>
+              </div>
+              <div class="p-2 w-full">
+                <div class="relative">
+                  <label for="message" class="leading-7 text-sm text-gray-600">Message</label>
+                  {{form.description}}
+                </div>
+              </div>
+              <div class="p-2 w-1/2">
+                <div class="relative">
+                  <label for="name" class="leading-7 text-sm text-gray-600">Price</label>
+                  {{form.price}}
+                </div>
+              </div>
+              <div class="p-2 w-1/2">
+                <div class="relative">
+                  <label for="email" class="leading-7 text-sm text-gray-600">Brand</label>
+                  {{form.brand}}
+                </div>
+              </div>
+              <div class="p-2 w-full">
+                <div class="relative">
+                  <label for="message" class="leading-7 text-sm text-gray-600">Image</label>
+                  {{form.image}}
+                </div>
+              </div>
+              <div class="py-5 px-2 w-full" dir="rtl">
+                <button class="flex text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" type="submit">Edit</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+</form>
+</div>
+{% endblock %}

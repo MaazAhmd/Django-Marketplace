@@ -7,7 +7,18 @@
 
 {% block body %}
 <section class="text-gray-600 body-font overflow-hidden">
-    <div class="container px-5 py-24 mx-auto">
+    <div class="container px-5 pb-24 mx-auto">
+      {% if user == item.created_by %}
+      <a href="{% url 'dashboard' %}" class="">
+        <button class="m-5 inline-flex items-center bg-green-500 border-0 py-1 px-3 pe-4 focus:outline-none hover:bg-green-700 rounded text-white text-lg">
+        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 me-2" viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7"></path>
+        </svg>
+        Back
+        </button>
+      </a>
+      <h1 class="text-3xl font-bold mb-5 mx-10 text-black pb-4"> Your Item:</h1>
+      {% endif %}
       <div class="lg:w-4/5 mx-auto flex flex-wrap">
         <img alt="ecommerce" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded-2xl" src="{{ item.image_url }}">
         <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
@@ -16,7 +27,34 @@
 
           <h1 class="mt-4 pt-4 border-t border-grey-200"><strong>Description:</strong></h1>
           <p class="leading-relaxed mt-1">{{ item.description }}</p>
-
+        {% if user == item.created_by %}
+          <div class="flex border-t border-gray-200 py-2 mt-8">
+            <span class="text-gray-500">Brand</span>
+            <span class="ml-auto text-gray-900">{{item.brand}}</span>
+          </div>
+          <div class="flex border-t border-gray-200 py-2">
+            <span class="text-gray-500">Date Added</span>
+            <span class="ml-auto text-gray-900">{{item.created_at.date}}</span>
+          </div>
+          <div class="flex border-t border-gray-200 py-5">
+            {% comment %} <div class="ml-auto text-black text-2xl">This is Your Item.</div> {% endcomment %}
+            {% comment %} <span class="ml-auto text-gray-900">{{item.created_at.date}}</span> {% endcomment %}
+          </div>
+          <div class="flex">
+            <span class="title-font font-medium text-2xl text-gray-900">Rs. {{ item.price|intcomma }}</span>
+            <a href="{% url 'edit' item.id %}" class="flex ml-auto">
+            <button class="text-md text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Edit</button>
+            </a>
+            <a href="{% url 'delete' item.id %}">
+            <button class="text-md rounded bg-red-500 px-6 py-2 border-0 items-center justify-center text-white ml-2 hover:bg-red-700">
+                Delete
+                {% comment %} <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
+                    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
+                </svg> {% endcomment %}
+            </button>
+            </a>
+          </div>
+        {% else %}
           <div class="flex border-t border-gray-200 py-2 mt-8">
             <span class="text-gray-500">Seller</span>
             <span class="ml-auto text-gray-900">{{ item.created_by.username }}</span>
@@ -39,10 +77,14 @@
                 </svg>
             </button>
           </div>
+
+          {% endif %}
         </div>
     </div>
     </div>
 </section>
+
+{% if user != item.created_by %}
 <hr>
 <section class="text-gray-600 body-font">
     <div class="container px-5 py-24 mx-auto">
@@ -65,5 +107,6 @@
       </div>
     </div>
   </section>
+{% endif %}
 
 {% endblock %}
