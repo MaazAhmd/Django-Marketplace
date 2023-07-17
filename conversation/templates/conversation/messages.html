@@ -1,0 +1,13 @@
+{% extends 'website/base.html' %}
+
+{% block title %}Contact Seller{% endblock %}
+
+{% block body %}
+<hr class="mt-1">
+<h1 class="text-3xl mb-1 mt-8 mx-6 font-bold">Send Message to the Seller:</h1>
+<form class="mt-2 mx-auto p-6" method="post" action="{% url 'conversation' item.id %}">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type="submit" class="text-white text-lg py-3 px-6 m-3 bg-blue-500 hover:bg-blue-700 rounded-xl">Send Message</button>
+</form>
+{% endblock %}

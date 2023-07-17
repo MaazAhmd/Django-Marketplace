@@ -1,0 +1,30 @@
+{% extends 'website/base.html' %}
+
+{% block title %}Inbox | Box{% endblock %}
+
+{% block body %}
+
+    <hr class="my-2">
+    <h1 class="font-bold text-3xl mx-10 mt-7">Messages: </h1>
+
+    <div class="container mx-6 p-6 my-4 mx-auto">
+        {% for message in messages %}
+            <div class="text-md mx-5 {% if message.created_by == user %} bg-blue-100 {% else %} bg-gray-200 {% endif %} py-4 mb-5 px-6 rounded-xl">
+                <div class="inline-flex">
+                        <div class="font-bold">{{message.created_by}}</div>
+                        <div class="mx-2">@{{message.created_at}}</div>
+                    </div>
+                <div class="mx-3 mt-4 mb-1 text-xl">{{message.content}}</div>
+            </div>
+        {% endfor %}
+        <form method="post" action="{% url 'chat' conversation.id %}">
+            {% csrf_token %}
+            <div class="">
+                Enter Message:
+                {{form.content}}
+            </div>
+            <button type="submit" class="mb-10 items-center bg-green-500 border-0 py-2 px-6 ms-2 mx-auto focus:outline-none hover:bg-green-700 rounded text-white mt-4 md:mt-0">Send</button>
+        </form>
+    </div>
+
+{% endblock %}
